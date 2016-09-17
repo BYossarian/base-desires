@@ -21,7 +21,7 @@ const ES_LINT_CONFIG = {
         'comma-dangle': 'warn'
     }
 };
-const JS_FILES = ['./*.js'];
+const JS_FILES = ['./*.js', './test/*.js'];
 
 gulp.task('lint', function() {
 

@@ -13,6 +13,11 @@ const PADDING = '=';
 const PADDING_REGEX = /=*$/;
 // the character padding at the end can only be either 1, 3, 4, or 6 (see spec for reasoning):
 const BASE32_REGEX = /^[a-z2-7]+(?:=|={3}|={4}|={6})?$/i;
+const PLUS_REGEX = /\+/g;
+const SLASH_REGEX = /\//g;
+const MINUS_REGEX = /\-/g;
+const UNDERSCORE_REGEX = /\_/g;
+const URL_SAFE_BASE64_REGEX = /^[a-z1-9\-\_]+(?:=|={2})?$/i;
 
 function bufferToBase32(buffer) {
 
@@ -162,8 +167,56 @@ function isValidBase32(string) {
 
 }
 
+function bufferToUrlSafeBase64(buffer) {
+
+    if (!Buffer.isBuffer(buffer)) {
+        throw new Error('bufferToUrlSafeBase64 requires a Buffer as input.');
+    }
+
+    return buffer.toString('base64')
+            .replace(PLUS_REGEX, '-')
+            .replace(SLASH_REGEX, '_');
+
+}
+
+function urlSafeBase64ToBuffer(string) {
+
+    if (typeof string !== 'string') {
+        throw new Error('urlSafeBase64ToBuffer requires a String as input.');
+    }
+
+    // make required replacements:
+    string = string.replace(MINUS_REGEX, '+').replace(UNDERSCORE_REGEX, '/');
+
+    return Buffer.from(string, 'base64');
+
+}
+
+function isValidUrlSafeBase64(string) {
+
+    if (typeof string !== 'string') {
+        return false;
+    }
+
+    // base64 strings should have a length that is a multiple of 4
+    if (string.length % 4 !== 0) {
+        return false;
+    }
+
+    // this will test for the correct amount of padding, and that the 
+    // remaining characters are from the url-safe base 64 alphabet. that 
+    // there are the right number of url-safe base 64 characters will 
+    // work out as a consequence of checking the padding and the string 
+    // length:
+    return URL_SAFE_BASE64_REGEX.test(string);
+
+}
+
 module.exports = {
     bufferToBase32: bufferToBase32,
     base32ToBuffer: base32ToBuffer,
-    isValidBase32: isValidBase32
+    isValidBase32: isValidBase32,
+    bufferToUrlSafeBase64: bufferToUrlSafeBase64,
+    urlSafeBase64ToBuffer: urlSafeBase64ToBuffer,
+    isValidUrlSafeBase64: isValidUrlSafeBase64
 };

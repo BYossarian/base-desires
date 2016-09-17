@@ -1,5 +1,5 @@
 # base-desires
-A lib for converting between node Buffers and base32 strings.
+A lib for converting between node Buffers and base32/url-safe base64 strings.
 
 Assumes Node v6+.
 
@@ -8,9 +8,12 @@ TODO: use ArrayBuffer
 ### API
 
 ```
-const base32 = require('./index.js');
+const baseDesires = require('./index.js');
 
-base32.bufferToBase32(<Buffer object>);  // returns a base32 string
-base32.base32ToBuffer(<String>);  // returns a Buffer
-base32.isValidBase32(<String>);  // returns Boolean
+baseDesires.bufferToBase32(<Buffer object>);  // returns a base32 string
+baseDesires.base32ToBuffer(<String>);  // returns a Buffer
+baseDesires.isValidBase32(<String>);  // returns a boolean
+baseDesires.bufferToUrlSafeBase64(<Buffer object>);  // returns a url-safe base64 string
+baseDesires.urlSafeBase64ToBuffer(<String>);  // returns a Buffer
+baseDesires.isValidUrlSafeBase64(<String>);  // returns a boolean
 ```
