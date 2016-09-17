@@ -1,0 +1,25 @@
+{
+  "name": "base-desires",
+  "version": "1.0.0",
+  "description": "A lib for converting between node Buffers and base32 strings.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BYossarian/base-desires.git"
+  },
+  "author": "Ben Jackson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BYossarian/base-desires/issues"
+  },
+  "homepage": "https://github.com/BYossarian/base-desires",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^3.0.1",
+    "mocha": "^3.0.2"
+  }
+}
